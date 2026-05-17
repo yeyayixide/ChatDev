@@ -297,7 +297,8 @@
     "non_retry_exception_types": "Non-Retry Exception Types",
     "retry_on_error_substrings": "Retry Error Substrings",
     "initial_instruction": "Initial Instruction",
-    "organization": "Organization"
+    "organization": "Organization",
+    "output_directory": "Output Directory"
   },
   "schema_desc": {
     "agent_role": "Defines the system-level role, persona, or behavioral guidelines.",
@@ -362,7 +363,9 @@
     "retry_on_exception_types": "Trigger retry mechanisms only if the exception matches.",
     "non_retry_exception_types": "Exceptions mapped as permanently fatal that will never be retried.",
     "retry_on_error_substrings": "Retry triggered by particular error text strings.",
-    "initial_instruction": "Global contextual starter instruction."
+    "initial_instruction": "Global contextual starter instruction.",
+    "organization": "Organization name for the workflow.",
+    "output_directory": "Custom output directory path. If not specified, uses default output_root/name_timestamp."
   },
   "help": {
     "startNode": {

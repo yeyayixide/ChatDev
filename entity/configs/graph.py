@@ -37,6 +37,7 @@ class GraphDefinition(BaseConfig):
     initial_instruction: str | None = None
     start_nodes: List[str] = field(default_factory=list)
     end_nodes: List[str] | None = None
+    output_directory: str | None = None
 
     FIELD_SPECS = {
         "id": ConfigFieldSpec(
@@ -127,6 +128,14 @@ class GraphDefinition(BaseConfig):
             description="End node ID list (used to collect final graph output, not part of execution logic). Commonly needed in subgraphs. This is an ordered list: earlier nodes are checked first; the first with output becomes the graph output, otherwise continue down the list.",
             advance=True,
         ),
+        "output_directory": ConfigFieldSpec(
+            name="output_directory",
+            display_name="Output Directory",
+            type_hint="str",
+            required=False,
+            description="Custom output directory path. If not specified, uses default output_root/name_timestamp",
+            advance=True,
+        ),
     }
 
     # CONSTRAINTS = (
@@ -157,6 +166,7 @@ class GraphDefinition(BaseConfig):
         is_majority = optional_bool(mapping, "is_majority_voting", path, default=False)
         organization = optional_str(mapping, "organization", path)
         initial_instruction = optional_str(mapping, "initial_instruction", path)
+        output_directory = optional_str(mapping, "output_directory", path)
 
         nodes_raw = ensure_list(mapping.get("nodes"))
         # if not nodes_raw:
@@ -223,6 +233,7 @@ class GraphDefinition(BaseConfig):
             initial_instruction=initial_instruction,
             start_nodes=start_nodes,
             end_nodes=end_nodes,
+            output_directory=output_directory,
             path=path,
         )
         definition.validate()

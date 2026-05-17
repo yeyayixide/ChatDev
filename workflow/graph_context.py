@@ -61,11 +61,19 @@ class GraphContext:
         
         # Output directory
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        fixed_output_dir = bool(config.metadata.get("fixed_output_dir"))
-        if fixed_output_dir or "session_" in config.name:
-            self.directory = config.output_root / config.name
+        
+        # Check for custom output directory first
+        if config.get_custom_output_dir():
+            # Use custom directory if specified
+            self.directory = config.get_custom_output_dir()
         else:
-            self.directory = config.output_root / f"{config.name}_{timestamp}"
+            # Fallback to original logic
+            fixed_output_dir = bool(config.metadata.get("fixed_output_dir"))
+            if fixed_output_dir or "session_" in config.name:
+                self.directory = config.output_root / config.name
+            else:
+                self.directory = config.output_root / f"{config.name}_{timestamp}"
+        
         self.directory.mkdir(parents=True, exist_ok=True)
         # Voting mode flag
         self.is_majority_voting: bool = config.is_majority_voting

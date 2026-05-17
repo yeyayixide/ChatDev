@@ -297,7 +297,8 @@
     "non_retry_exception_types": "非重试异常类型",
     "retry_on_error_substrings": "基于错误子串的重试",
     "initial_instruction": "初始指令",
-    "organization": "组织"
+    "organization": "组织",
+    "output_directory": "输出目录"
   },
   "schema_desc": {
     "agent_role": "定义智能体的系统级角色、身份或行为准则。",
@@ -362,7 +363,9 @@
     "retry_on_exception_types": "遇指定代码异常类型时才重试。",
     "non_retry_exception_types": "设定不进行徒劳重试的限制类型。",
     "retry_on_error_substrings": "利用关键字正则匹配错误触发重试。",
-    "initial_instruction": "系统维度的初始上下文统领级全局指令声明。"
+    "initial_instruction": "系统维度的初始上下文统领级全局指令声明。",
+    "organization": "工作流所属的组织名称。",
+    "output_directory": "自定义输出目录路径。如果未指定，使用默认的 output_root/name_timestamp 格式。"
   },
   "help": {
     "startNode": {

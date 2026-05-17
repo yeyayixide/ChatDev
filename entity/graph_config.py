@@ -17,7 +17,8 @@ class GraphConfig:
     metadata: Dict[str, Any] = field(default_factory=dict)
     source_path: Optional[str] = None
     vars: Dict[str, Any] = field(default_factory=dict)
-
+    custom_output_dir: Optional[Path] = None
+    
     @classmethod
     def from_dict(
         cls,
@@ -29,10 +30,16 @@ class GraphConfig:
         vars: Dict[str, Any] | None = None,
     ) -> "GraphConfig":
         definition = GraphDefinition.from_dict(config, path="graph")
+        # 增加自定义输出目录优先级
+        custom_output_dir = None
+        if definition.output_directory:
+            custom_output_dir = Path(definition.output_directory)
+
         return cls(
             definition=definition,
             name=name,
             output_root=Path(output_root) if output_root else Path("WareHouse"),
+            custom_output_dir=custom_output_dir,
             log_level=definition.log_level,
             metadata={},
             source_path=source_path,
@@ -47,12 +54,17 @@ class GraphConfig:
         output_root: Path | str,
         *,
         source_path: str | None = None,
-        vars: Dict[str, Any] | None = None,
+        vars: Dict[str, Any] | None = None
     ) -> "GraphConfig":
+        custom_output_dir = None
+        if definition.output_directory:
+            custom_output_dir = Path(definition.output_directory)
+        
         return cls(
             definition=definition,
             name=name,
             output_root=Path(output_root) if output_root else Path("WareHouse"),
+            custom_output_dir=custom_output_dir,
             log_level=definition.log_level,
             metadata={},
             source_path=source_path,
@@ -91,4 +103,8 @@ class GraphConfig:
             "metadata": self.metadata,
             "graph": self.definition,
             "vars": self.vars,
+            "custom_output_dir": self.custom_output_dir
         }
+
+    def get_custom_output_dir(self) -> Optional[Path]:
+        return self.custom_output_dir
